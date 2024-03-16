@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}S'Quizzy Yeah{% endblock title %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'quizz/main.css'%}" >
+{% endblock styles %}
+{% block content %}
+
+
+  <!-- Modal -->
+    <div class="modal fade " id="validation_modal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content fancy_content">
+            <div class="modal-header">
+            <h3 class="modal-title fs-5 fancy_font" id="validationModalLabel">Prêt pour le "<b><span id="nom-quiz"></span></b>" ?</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body fancy_font flex_box" id="modal-body-validate">
+    
+                <p class="fancy_box" ><span id="sujet-quiz"></span></p>
+                <p class="fancy_box" ><span id="duree-quiz"></span></p>
+                <p class="fancy_box" ><span id="difficulte-quiz"></span></p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class=" fancy_btn hgrey_bg fancy_font" data-bs-dismiss="modal">Hmm... Non</button>
+            <button type="button" class=" fancy_btn green_bg  fancy_font" id="start_btn" >Vazzy!</button>
+            </div>
+        </div>
+        </div>
+    </div>
+  
+    <div class="simple_content">
+      <div class="fancy_rounded " ><h1 class="fancy_font_special">S'Quizzy!</h1></div>
+    
+        <ul class="list-group">
+    {% for quiz in object_list %}
+
+            <li class=" modal_dec fancy_line  fancy_font"
+            data-pk="{{quiz.pk}}"
+            data-nom="{{quiz.nom}}"
+            data-sujet="{{quiz.sujet}}"
+            data-nb-questions="{{quiz.nombre_de_questions}}"
+            data-difficulte="{{quiz.difficulte}}"
+            data-temps="{{quiz.temps}}"
+            data-score-min="{{quiz.score_de_reussite}}"
+            data-bs-toggle="modal" 
+            data-bs-target="#validation_modal"
+            role="button">
+            {{quiz.nom}}</li>
+
+    {% endfor %}
+        </ul>
+      </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'quizz/main.js' %}" refer>
+    </script>
+{% endblock scripts %}
+
