@@ -10,7 +10,6 @@ $(document).ready(function(){
             const difficulte = modal_dec.getAttribute('data-difficulte')
             const temps = modal_dec.getAttribute('data-temps')
             const score_min = modal_dec.getAttribute('data-score-min')
-            console.log(modal_dec.getAttribute('data-difficulte'))
 
             $('#nom-quiz').html(nom)
             $('#sujet-quiz').html(sujet)

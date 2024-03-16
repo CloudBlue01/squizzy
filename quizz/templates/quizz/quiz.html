@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-{{quiz.nom}}
+{{quiz.sujet}}
 {% endblock title %}
 
 {% block styles %}
@@ -12,6 +12,7 @@
 {% block content %} 
   
 <div class="flex_box">
+
   <div class="row justify-content-center" id="plateau-quiz" >
     <div class="simple_content timer" id="s-content">
       <h3 class="fancy_font fancy_line" id="timer-zone"></h3>
@@ -19,15 +20,20 @@
       <h3 class="fancy_font fancy_line" > Réussite <span id="reussite"></span></h3>
     </div>
   </div>
+
   <div class="result_card" id="res-card">
+
     <div class="card_front">
       <h1 class="card_title" id="message">...</h1>
       <p class="subtitle" id="flaterie">...</p>
       <h3 class="fancy_font " id="new-timer-zone"></h3>
-      <h3 class="fancy_font " > Score : <span id="new-score"> 0 </span></h3>
-      <h3 class="fancy_font " > Réussite <span id="new-reussite"></span></h3>
+      <h3 class="fancy_font " > Score de <span id="new-score"> 0 </span></h3>
+      <h3 class="fancy_font " > <span id="new-reussite"></span></h3>
+      <h3 class="fancy_font " > <span id="new-timer-zone"></span></h3>
     </div>
+
     <div class="card_back">
+
       <button class="fancy_btn fancy_font gold_bg" onclick="rejouer()">
         Recommencer
       </button>
@@ -37,7 +43,11 @@
       </button>
 
     </div>
+
   </div>
+
+  <div class="fancy_content" id="list-reponse"></div>
+
 </div>
   
 {% endblock content %}

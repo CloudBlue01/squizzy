@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Quiz
 from django.views.generic import ListView
 from django.http import JsonResponse
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -27,3 +28,7 @@ def quiz_data_view(request,pk):
         'temps':quiz.temps,
         'score_ideal':quiz.score_de_reussite,
     })   
+
+def quiz_view_redirect(request,pk,undefined):
+    return redirect('quizz-view', pk=pk)
+    

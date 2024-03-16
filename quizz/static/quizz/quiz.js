@@ -10,11 +10,8 @@ $(document).ready(function(){
     let nb_reponse_valide = 0
     let score = 0
     let index_reponse = []   
-    //timer
-    //affichage score
-    //affichage mauvaise réponse
-    //reesayer
 
+    $("#list-reponse").hide()
     
     const reussite_quizz = function(nb_questions,score_ideal){
         let result = Math.round(( nb_reponse_valide /  nb_questions ) * 100)
@@ -39,10 +36,11 @@ $(document).ready(function(){
             let seconds = data.temps * 60
             let timer_interval = setInterval(function(){
                 seconds --
+                if(seconds < 10){$('#timer-zone').toggleClass("blink")}   
                 if(seconds === 0){
                     apres_quiz()
-                    stop_quiz()
-                }
+                    stop_quiz()}
+ 
                 let min = Math.floor(seconds / 60)
                 let sec = Math.floor(seconds % 60)
                 $('#timer-zone').text((min<10?"0"+min:min) + ":"+(sec<10?"0"+sec:sec))
@@ -53,7 +51,46 @@ $(document).ready(function(){
                 $('#plateau-quiz').html("")
             }
 
+            //affichage mauvaise réponse
+            const list_reponse = function(){
+                if(index_reponse.length != 0){
+                    const list_rep = document.getElementById('list-reponse')
+                    let ul = document.createElement('ul')
+                    let h3 = document.createElement('h3')
+                    h3.innerText = " Les réponses exactes !"
+                    ul.appendChild(h3)
+
+                    for(let i = 0; i < index_reponse.length;i++){
+                        let qs = data.questions[index_reponse[i]]
+                        for(q in qs){
+                            let rep = ""
+                            qs[q].forEach(function(reps){
+                                if(reps.estCorrect){
+                                    rep = reps.texte
+                                    return 0
+                                }
+                            })
+                            let li = document.createElement('li')
+                            li.classList.add('fancy_line')
+                            li.classList.add('col_dir')
+                            let p1 = document.createElement('p')                            
+                            let h5 = document.createElement('h5')
+                            p1.innerText = q
+                            h5.innerText = rep
+                            li.appendChild(p1)
+                            li.appendChild(h5)
+                            ul.appendChild(li)
+                        }
+                    }
+                    list_rep.appendChild(ul)
+                    list_rep.classList.add('free_model')
+                    $('#list-reponse').show()
+                }
+            }
+
             const apres_quiz = function(){
+                let min = Math.floor(seconds / 60)
+                let sec = Math.floor(seconds % 60)
                 if(reussite_quizz(data.score_ideal,data.questions.length)){
                     let message = (score==100?"Ouah, un sans faute!":"Félicitation")
                     $('#res-card').show('fast')
@@ -68,12 +105,15 @@ $(document).ready(function(){
                     $('#res-card #flaterie').text('Faites mieux la prochaine fois!')
                     
                 }
-                $('#new-score').text(score)
-                    $('#new-reussite').text(nb_reponse_valide)
+                $('#new-score').text((score > 1?" "+score+" points":(score==1?" 1 point":" 0 ")))
+                $('#new-reussite').text((nb_reponse_valide>1?nb_reponse_valide+" bonnes réponses":(nb_reponse_valide==1?"Une bonne réponse":"Aucune bonne réponse")))
+                $('#new-timer-zone').text("Record de "+(min<10?"0"+min:min) + " min et "+(sec<10?"0"+sec:sec)+ " sec")
+                list_reponse()
             }
 
             $('#reussite').text(" : "+ (nb_reponse_valide<10?"0"+nb_reponse_valide:nb_reponse_valide) + "/" + data.questions.length)
             $('#res-card').hide()
+
             data.questions = melanger_donnees(data.questions)
             data.questions.forEach(function(questions,index){
                 let card_div = document.createElement('div')
