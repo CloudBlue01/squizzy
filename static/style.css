@@ -2,12 +2,7 @@
 body {
     margin:0;
     padding:0;
-    width: 1000vh;
-    height: 1000vh;
     background: linear-gradient(to bottom, #ff930f, #ffcc33);
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow-x: auto;
   }
 
 
