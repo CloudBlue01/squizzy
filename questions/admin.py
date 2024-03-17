@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Question,Reponse
 
-
 # Register your models here.
 
 class ReponseInline(admin.TabularInline):
